@@ -1,25 +1,12 @@
-from menu import Menu, MenuItem
-from coffee_maker import CoffeeMaker
-from money_machine import MoneyMachine
+from question_model import Question
+from data import question_data
 
-money_machine=MoneyMachine()
-coffee_maker=CoffeeMaker()
-menu=Menu()
+question_bank=[]
 
-coffee_maker.report()
-money_machine.report()
+for question in question_data:
+    question_text=question["text"]
+    question_answer=question["answer"]
+    new_question=Question(question_text,question_answer)
+    question_bank.append(new_question)
 
-is_on=True
-
-while is_on:
-    options=menu.get_items()
-    choice=input(f"What would you like? ({options}): ")
-    if choice=="off":
-        is_on=False
-    elif choice=="report":
-        coffee_maker.report()
-        money_machine.report()
-    else:
-        drink=menu.find_drink(choice)
-        if coffee_maker.is_resource_sufficient(drink) and money_machine.make_payment(drink.cost):
-                coffee_maker.make_coffee(drink)
+print(question_bank)
